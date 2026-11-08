@@ -115,7 +115,7 @@ export const AppNavbar: FC<AppControlProps> = ({ openColorModal }) => {
     <AppShell.Navbar className={classes.navbar}>
       {/* Logo */}
       <AppShell.Section grow>
-        <LogoBox size="100%" className={classes.logo} component={Link} to="/" />
+        <LogoBox size="2.75rem" mx="auto" className={classes.logo} component={Link} to="/" />
       </AppShell.Section>
 
       {/* Common Nav */}
