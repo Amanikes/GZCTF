@@ -56,7 +56,6 @@ const TodayBox = (i: number, content: string) => (
 const DAY_WIDTH = 40
 const VIEW_WIDTH = DAY_WIDTH * 7 * 7
 const STICKY_WIDTH = 240
-const EDGE_PADDING = 10
 const HEADER_HEIGHT = 68
 const ROW_HEIGHT = 33
 const BOTTOM_PADDING = 12
@@ -175,7 +174,6 @@ export const GanttTimeLine: FC<GanttTimeLineProps> = ({ items }) => {
           '--view-width': `${VIEW_WIDTH}px`,
           '--view-height': `${viewHeight}px`,
           '--now-offset': `${nowOffset}px`,
-          '--edge-padding': `${EDGE_PADDING}px`,
         }}
       >
         {/* bars, position: absolute */}
