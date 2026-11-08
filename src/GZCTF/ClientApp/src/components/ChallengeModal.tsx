@@ -1,4 +1,5 @@
 import {
+  Badge,
   Button,
   Divider,
   Group,
@@ -21,7 +22,12 @@ import { useTranslation } from 'react-i18next'
 import { InstanceEntry } from '@Components/InstanceEntry'
 import { ContentPlaceholder, InlineMarkdown, Markdown } from '@Components/MarkdownRenderer'
 import { useLanguage } from '@Utils/I18n'
-import { ChallengeCategoryItemProps } from '@Utils/Shared'
+import {
+  ChallengeCategoryItemProps,
+  ChallengeDifficultyColorMap,
+  getChallengeDifficultyLevel,
+  useChallengeDifficultyLabelMap,
+} from '@Utils/Shared'
 import { useSyncOnChange } from '@Hooks/useSyncOnChange'
 import { ChallengeDetailModel, ChallengeType } from '@Api'
 import classes from '@Styles/ChallengeModal.module.css'
@@ -83,6 +89,7 @@ const ChallengeDeadlineNotice: FC<ChallengeDeadlineNoticeProps> = ({ deadline, o
 export interface ChallengeModalProps extends ModalProps {
   challenge?: ChallengeDetailModel
   cateData: ChallengeCategoryItemProps
+  difficulty?: number
   solved?: boolean
   disabled?: boolean
   gameTitle?: string
@@ -101,6 +108,7 @@ export const ChallengeModal: FC<ChallengeModalProps> = (props) => {
   const {
     challenge,
     cateData,
+    difficulty,
     solved,
     disabled,
     gameTitle,
@@ -118,6 +126,9 @@ export const ChallengeModal: FC<ChallengeModalProps> = (props) => {
   const { t } = useTranslation()
   const theme = useMantineTheme()
   const { locale } = useLanguage()
+  const challengeDifficultyLabelMap = useChallengeDifficultyLabelMap()
+  const difficultyLevel = getChallengeDifficultyLevel(difficulty ?? challenge?.difficulty)
+  const difficultyLabel = difficultyLevel ? challengeDifficultyLabelMap.get(difficultyLevel) : undefined
 
   const placeholders = t('challenge.content.flag_placeholders', {
     returnObjects: true,
@@ -145,9 +156,16 @@ export const ChallengeModal: FC<ChallengeModalProps> = (props) => {
             {challenge?.title ?? ''}
           </Title>
         </Group>
-        <Text miw="6rem" fw="bold" ff="monospace" ta="right">
-          {challenge?.score ?? 0} pts
-        </Text>
+        <Stack gap={2} align="flex-end" miw="6rem" style={{ flexShrink: 0 }}>
+          {difficultyLevel && difficultyLabel && (
+            <Badge size="xs" variant="light" color={ChallengeDifficultyColorMap[difficultyLevel]}>
+              {difficultyLabel}
+            </Badge>
+          )}
+          <Text fw="bold" ff="monospace" ta="right">
+            {challenge?.score ?? 0} pts
+          </Text>
+        </Stack>
       </Group>
       <Divider size="md" color={cateData?.color} />
     </Stack>

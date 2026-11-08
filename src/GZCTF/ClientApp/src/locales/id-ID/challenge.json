@@ -121,6 +121,11 @@
       "Angin sangat pahit dan dingin, dan flag masih belum ada di tanganmu."
     ]
   },
+  "difficulty": {
+    "easy": "Mudah",
+    "medium": "Sedang",
+    "hard": "Sulit"
+  },
   "file_type": {
     "local": "Hosting sendiri",
     "none": "Tidak ada",

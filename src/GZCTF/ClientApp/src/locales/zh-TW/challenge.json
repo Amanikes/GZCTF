@@ -121,6 +121,11 @@
       "風蕭蕭兮易水寒，無奈 flag 仍未到彼岸。"
     ]
   },
+  "difficulty": {
+    "easy": "簡單",
+    "medium": "中等",
+    "hard": "困難"
+  },
   "file_type": {
     "local": "本地附件",
     "none": "無附件",

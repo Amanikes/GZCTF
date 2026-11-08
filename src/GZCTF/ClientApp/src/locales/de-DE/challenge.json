@@ -121,6 +121,11 @@
       "Die Winde sind bitter und kalt, und die Fahne ist immer noch nicht in deiner Hand."
     ]
   },
+  "difficulty": {
+    "easy": "Einfach",
+    "medium": "Mittel",
+    "hard": "Schwer"
+  },
   "file_type": {
     "local": "Selbst gehostet",
     "none": "Keine",

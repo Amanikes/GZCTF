@@ -1,4 +1,5 @@
 import {
+  Badge,
   Box,
   Card,
   Center,
@@ -20,7 +21,14 @@ import { FC, useMemo } from 'react'
 import { Trans } from 'react-i18next'
 import { ScrollingText } from '@Components/ScrollingText'
 import { useLanguage } from '@Utils/I18n'
-import { BloodsTypes, PartialIconProps, useChallengeCategoryLabelMap } from '@Utils/Shared'
+import {
+  BloodsTypes,
+  ChallengeDifficultyColorMap,
+  PartialIconProps,
+  getChallengeDifficultyLevel,
+  useChallengeCategoryLabelMap,
+  useChallengeDifficultyLabelMap,
+} from '@Utils/Shared'
 import { ChallengeInfo, SubmissionType } from '@Api'
 import classes from '@Styles/ChallengeCard.module.css'
 import misc from '@Styles/Misc.module.css'
@@ -37,7 +45,10 @@ interface ChallengeCardProps {
 export const ChallengeCard: FC<ChallengeCardProps> = (props: ChallengeCardProps) => {
   const { challenge, solved, onClick, iconMap, teamId, colorMap } = props
   const challengeCategoryLabelMap = useChallengeCategoryLabelMap()
+  const challengeDifficultyLabelMap = useChallengeDifficultyLabelMap()
   const cateData = challengeCategoryLabelMap.get(challenge.category!)
+  const difficultyLevel = getChallengeDifficultyLevel(challenge.difficulty)
+  const difficultyLabel = difficultyLevel ? challengeDifficultyLabelMap.get(difficultyLevel) : undefined
   const theme = useMantineTheme()
   const { locale } = useLanguage()
 
@@ -56,8 +67,20 @@ export const ChallengeCard: FC<ChallengeCardProps> = (props: ChallengeCardProps)
       data-no-move
     >
       <Stack gap="xs" pos="relative" style={{ zIndex: 99 }}>
-        <Group h="30px" wrap="nowrap" justify="space-between" gap={2}>
-          <ScrollingText text={challenge.title || ''} size="lg" />
+        <Group h="30px" wrap="nowrap" justify="space-between" gap={4} pr={solved ? '1.6rem' : undefined}>
+          <Box style={{ minWidth: 0, flex: 1 }}>
+            <ScrollingText text={challenge.title || ''} size="lg" />
+          </Box>
+          {difficultyLevel && difficultyLabel && (
+            <Badge
+              size="xs"
+              variant="light"
+              color={ChallengeDifficultyColorMap[difficultyLevel]}
+              style={{ flexShrink: 0 }}
+            >
+              {difficultyLabel}
+            </Badge>
+          )}
         </Group>
         <Divider size="sm" color={cateData?.color} />
         <Group wrap="nowrap" justify="space-between" align="center" gap={2}>

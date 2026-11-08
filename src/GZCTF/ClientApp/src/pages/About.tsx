@@ -4,8 +4,8 @@ import { Icon } from '@mdi/react'
 import { FC, ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
 import contributorsData from 'virtual:contributors'
+import { LogoBox } from '@Components/LogoBox'
 import { WithNavBar } from '@Components/WithNavbar'
-import { MainIcon } from '@Components/icon/MainIcon'
 import { useIsMobile } from '@Utils/ThemeOverride'
 import { ValidatedRepoMeta } from '@Hooks/useConfig'
 import { usePageTitle } from '@Hooks/usePageTitle'
@@ -54,10 +54,10 @@ const About: FC = () => {
           {/* Hero */}
           <Stack align="center" gap={0} className={classes.hero}>
             <Box className={classes.iconGlow}>
-              <MainIcon size="5rem" className={classes.mainIcon} />
+              <LogoBox size="5rem" className={classes.mainIcon} />
             </Box>
             <Title order={1} size="3.5rem" fw={800} ta="center" className={classes.mainTitle}>
-              GZ<span className={logoClasses.brand}>::</span>CTF
+              AxumSec<span className={logoClasses.brand}>&nbsp;CTF</span>
             </Title>
             <Text size="xl" fw={500} ta="center" c="dimmed" ff="monospace" mt="xs" className={classes.slogan}>
               &gt;&nbsp;{t('common.content.about.slogan')}

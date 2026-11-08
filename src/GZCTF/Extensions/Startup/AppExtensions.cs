@@ -32,7 +32,7 @@ internal static class AppExtensions
             try
             {
                 var version = typeof(Server).Assembly.GetCustomAttribute<AssemblyDescriptionAttribute>()?.Description;
-                logger.SystemLog(version ?? "GZ::CTF", TaskStatus.Pending, LogLevel.Debug);
+                logger.SystemLog(version ?? "AxumSec CTF", TaskStatus.Pending, LogLevel.Debug);
                 await app.RunAsync();
             }
             catch (Exception exception)

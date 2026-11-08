@@ -134,7 +134,7 @@ const Configs: FC = () => {
               <TextInput
                 label={t('admin.content.settings.platform.name.label')}
                 description={t('admin.content.settings.platform.name.description')}
-                placeholder="GZ"
+                placeholder="AxumSec"
                 disabled={disabled}
                 value={globalConfig?.title ?? ''}
                 onChange={(e) => {
@@ -193,7 +193,7 @@ const Configs: FC = () => {
               <TextInput
                 label={t('admin.content.settings.platform.description.label')}
                 description={t('admin.content.settings.platform.description.description')}
-                placeholder="GZ::CTF is an open source CTF platform"
+                placeholder="AxumSec CTF is a CTF platform"
                 disabled={disabled}
                 value={globalConfig?.description ?? ''}
                 onChange={(e) => {

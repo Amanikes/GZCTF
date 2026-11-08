@@ -43,6 +43,11 @@ public class ChallengeDetailModel
     public ChallengeType Type { get; set; } = ChallengeType.StaticAttachment;
 
     /// <summary>
+    /// Difficulty coefficient used for dynamic scoring
+    /// </summary>
+    public double Difficulty { get; set; }
+
+    /// <summary>
     /// Flag context
     /// </summary>
     public ClientFlagContext Context { get; set; } = null!;
@@ -73,6 +78,7 @@ public class ChallengeDetailModel
             Category = gameInstance.Challenge.Category,
             Title = gameInstance.Challenge.Title,
             Type = gameInstance.Challenge.Type,
+            Difficulty = gameInstance.Challenge.Difficulty,
             Limit = gameInstance.Challenge.SubmissionLimit,
             Deadline = gameInstance.Challenge.DeadlineUtc,
             Attempts = attemptCount,

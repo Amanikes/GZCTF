@@ -1773,6 +1773,11 @@ export interface ChallengeInfo {
   /** Challenge category */
   category: ChallengeCategory;
   /**
+   * Difficulty coefficient used for dynamic scoring
+   * @format double
+   */
+  difficulty: number;
+  /**
    * Challenge score
    * @format int32
    */
@@ -2043,6 +2048,11 @@ export interface ChallengeDetailModel {
   score?: number;
   /** Challenge type */
   type?: ChallengeType;
+  /**
+   * Difficulty coefficient used for dynamic scoring
+   * @format double
+   */
+  difficulty?: number;
   /** Flag context */
   context?: ClientFlagContext;
   /**

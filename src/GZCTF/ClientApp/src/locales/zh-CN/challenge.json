@@ -121,6 +121,11 @@
       "风萧萧兮易水寒，无奈 flag 仍未到彼岸。"
     ]
   },
+  "difficulty": {
+    "easy": "简单",
+    "medium": "中等",
+    "hard": "困难"
+  },
   "file_type": {
     "local": "本地附件",
     "none": "无附件",

@@ -121,6 +121,11 @@
       "Los vientos son amargos y fríos, y la bandera aún no está en tu mano."
     ]
   },
+  "difficulty": {
+    "easy": "Fácil",
+    "medium": "Medio",
+    "hard": "Difícil"
+  },
   "file_type": {
     "local": "Autoalojado",
     "none": "Ninguno",

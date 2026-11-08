@@ -121,6 +121,11 @@
       "Gió lạnh và buốt, flag vẫn chưa nằm trong tay bạn."
     ]
   },
+  "difficulty": {
+    "easy": "Dễ",
+    "medium": "Trung bình",
+    "hard": "Khó"
+  },
   "file_type": {
     "local": "Tự lưu trữ",
     "none": "Không có",

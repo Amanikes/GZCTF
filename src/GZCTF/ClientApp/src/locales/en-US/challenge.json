@@ -121,6 +121,11 @@
       "The winds are bitter and cold, and the flag is still not on your hand."
     ]
   },
+  "difficulty": {
+    "easy": "Easy",
+    "medium": "Medium",
+    "hard": "Hard"
+  },
   "file_type": {
     "local": "Self Hosted",
     "none": "None",

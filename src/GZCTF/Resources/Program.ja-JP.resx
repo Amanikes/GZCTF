@@ -741,7 +741,7 @@
     <value>オープンソース CTF プラットフォーム</value>
   </data>
   <data name="Init_PostTitle" xml:space="preserve">
-    <value>GZ::CTF へようこそ！</value>
+    <value>AxumSec CTF へようこそ！</value>
   </data>
   <data name="Init_XorKeyNotSet" xml:space="preserve">
     <value>XorKey フィールドが設定されていません。プラットフォームの起動設定を確認してください</value>

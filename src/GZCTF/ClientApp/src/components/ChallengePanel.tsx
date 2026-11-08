@@ -290,6 +290,7 @@ export const ChallengePanel: FC = () => {
           )!}
           title={challenge?.title ?? ''}
           score={challenge?.score ?? 0}
+          difficulty={challenge.difficulty}
           challengeId={challenge.id}
         />
       )}

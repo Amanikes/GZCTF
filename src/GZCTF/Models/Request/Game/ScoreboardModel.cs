@@ -334,6 +334,12 @@ public partial class ChallengeInfo
     public ChallengeCategory Category { get; set; }
 
     /// <summary>
+    /// Difficulty coefficient used for dynamic scoring
+    /// </summary>
+    [Required]
+    public double Difficulty { get; set; }
+
+    /// <summary>
     /// Challenge score
     /// </summary>
     [Required]

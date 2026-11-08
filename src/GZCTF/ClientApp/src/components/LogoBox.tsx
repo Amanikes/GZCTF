@@ -1,22 +1,26 @@
-import { Box, BoxProps, createPolymorphicComponent, ElementProps, em, Image } from '@mantine/core'
+import defaultLogo from '@Resources/logo.png'
+import { Box, BoxProps, createPolymorphicComponent, ElementProps, Image, StyleProp } from '@mantine/core'
 import { forwardRef } from 'react'
-import { MainIcon, MainIconProps } from '@Components/icon/MainIcon'
 import { useConfig } from '@Hooks/useConfig'
 
-type LogoProps = MainIconProps & BoxProps & ElementProps<'div'> & { url?: string }
+type LogoProps = BoxProps &
+  ElementProps<'div'> & {
+    size?: StyleProp<React.CSSProperties['width']>
+    url?: string
+  }
 
 export const LogoBox = createPolymorphicComponent<'div', LogoProps>(
   forwardRef<HTMLDivElement, LogoProps>((props, ref) => {
-    const { size, ignoreTheme, url, ...others } = props
+    const { size, url, ...others } = props
     const { config } = useConfig()
     const custom = url || config.logoUrl
 
     return (
       <Box {...others} ref={ref} w={size} h={size}>
         {custom ? (
-          <Image src={custom} w={size} h="auto" maw={size} mah={size} />
+          <Image src={custom} w={size} h="auto" maw={size} mah={size} alt="logo" />
         ) : (
-          <MainIcon ignoreTheme={ignoreTheme} size={em(size)} />
+          <Image src={defaultLogo} w={size} h="auto" maw={size} mah={size} fit="contain" alt="logo" />
         )}
       </Box>
     )

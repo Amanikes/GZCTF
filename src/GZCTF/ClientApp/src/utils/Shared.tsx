@@ -110,6 +110,36 @@ export const ChallengeTypeItem: SelectProps['renderOption'] = ({ option }) => {
   )
 }
 
+export type ChallengeDifficultyLevel = 'easy' | 'medium' | 'hard'
+
+export const getChallengeDifficultyLevel = (difficulty?: number | null): ChallengeDifficultyLevel | null => {
+  if (difficulty === undefined || difficulty === null || Number.isNaN(difficulty)) return null
+
+  if (difficulty < 3) return 'easy'
+  if (difficulty <= 6) return 'medium'
+  return 'hard'
+}
+
+export const ChallengeDifficultyColorMap: Record<ChallengeDifficultyLevel, DefaultMantineColor> = {
+  easy: 'teal',
+  medium: 'yellow',
+  hard: 'red',
+}
+
+export const useChallengeDifficultyLabelMap = () => {
+  const { t } = useTranslation()
+
+  return useMemo(
+    () =>
+      new Map<ChallengeDifficultyLevel, string>([
+        ['easy', t('challenge.difficulty.easy')],
+        ['medium', t('challenge.difficulty.medium')],
+        ['hard', t('challenge.difficulty.hard')],
+      ]),
+    [t]
+  )
+}
+
 export const ChallengeCategoryList = Object.values(ChallengeCategory)
 
 export const useChallengeCategoryLabelMap = () => {

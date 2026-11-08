@@ -121,6 +121,11 @@
       "Les vents sont amers et froids, et le drapeau n'est toujours pas dans votre main."
     ]
   },
+  "difficulty": {
+    "easy": "Facile",
+    "medium": "Moyen",
+    "hard": "Difficile"
+  },
   "file_type": {
     "local": "Hébergé soi-même",
     "none": "Aucun",

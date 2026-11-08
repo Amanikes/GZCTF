@@ -21,13 +21,25 @@ interface GameChallengeModalProps extends ModalProps {
   cateData: ChallengeCategoryItemProps
   title: string
   score: number
+  difficulty?: number
   challengeId: number
   status?: SubmissionType
 }
 
 export const GameChallengeModal: FC<GameChallengeModalProps> = (props) => {
-  const { gameId, gameTitle, gameEnded, practiceMode, challengeId, cateData, status, title, score, ...modalProps } =
-    props
+  const {
+    gameId,
+    gameTitle,
+    gameEnded,
+    practiceMode,
+    challengeId,
+    cateData,
+    status,
+    title,
+    score,
+    difficulty,
+    ...modalProps
+  } = props
 
   const { data: challenge, mutate } = api.game.useGameGetChallenge(gameId, challengeId, {
     refreshInterval: 120 * 1000,
@@ -253,6 +265,7 @@ export const GameChallengeModal: FC<GameChallengeModalProps> = (props) => {
       gameTitle={gameTitle}
       challenge={challenge ?? { title, score }}
       cateData={cateData}
+      difficulty={difficulty}
       solved={(status !== SubmissionType.Unaccepted && status !== undefined) || solvedChallengeId === challengeId}
       flag={flag}
       setFlag={setFlag}
