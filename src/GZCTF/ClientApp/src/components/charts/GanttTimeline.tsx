@@ -1,12 +1,14 @@
-import { Box, ScrollArea, Stack, Text, Title } from '@mantine/core'
+import { Box, Center, ScrollArea, Stack, Text, Title } from '@mantine/core'
 import cx from 'clsx'
 import dayjs, { Dayjs } from 'dayjs'
 import { FC, useEffect, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router'
+import { Empty } from '@Components/Empty'
 import { useLanguage } from '@Utils/I18n'
 import { useSyncOnChange } from '@Hooks/useSyncOnChange'
 import classes from '@Styles/GanttTimeline.module.css'
+import headlineClasses from '@Styles/Headline.module.css'
 
 interface GanttTimeLineProps {
   items: GanttItem[]
@@ -22,7 +24,7 @@ export interface GanttItem {
 }
 
 const MonthBox = (i: number, content: string, ex: string) => (
-  <Box key={i} left={i * 40} className={cx(classes.date, ex)}>
+  <Box key={i} left={i * DAY_WIDTH} className={cx(classes.date, ex)}>
     <div className={classes.left}>
       <Text className={classes.label} span>
         {content}
@@ -32,7 +34,7 @@ const MonthBox = (i: number, content: string, ex: string) => (
 )
 
 const DayBox = (i: number, content: string, ex: string) => (
-  <Box key={i} left={i * 40} className={cx(classes.date, ex)}>
+  <Box key={i} left={i * DAY_WIDTH} className={cx(classes.date, ex)}>
     <div className={classes.center}>
       <Text className={classes.label} span>
         {content}
@@ -42,7 +44,7 @@ const DayBox = (i: number, content: string, ex: string) => (
 )
 
 const TodayBox = (i: number, content: string) => (
-  <Box key={i} left={i * 40} className={cx(classes.date, classes.day)}>
+  <Box key={i} left={i * DAY_WIDTH} className={cx(classes.date, classes.day)}>
     <div className={cx(classes.center, classes.today)}>
       <Text className={classes.label} span>
         {content}
@@ -51,10 +53,16 @@ const TodayBox = (i: number, content: string) => (
   </Box>
 )
 
-const VIEW_WIDTH = 40 * 7 * 7
-const VIEW_HEIGHT = 300
+const DAY_WIDTH = 40
+const VIEW_WIDTH = DAY_WIDTH * 7 * 7
 const STICKY_WIDTH = 240
 const EDGE_PADDING = 10
+const HEADER_HEIGHT = 68
+const ROW_HEIGHT = 33
+const BOTTOM_PADDING = 12
+const MIN_VIEW_HEIGHT = HEADER_HEIGHT + ROW_HEIGHT + BOTTOM_PADDING
+/** short events (e.g. a 2h game inside a 7-week window) are only a few px wide */
+const MIN_BAR_WIDTH = 8
 
 interface MonthHeader {
   position: number
@@ -111,10 +119,10 @@ export const GanttTimeLine: FC<GanttTimeLineProps> = ({ items }) => {
       }
       if (current.date() === 1) {
         months.push(MonthBox(i, current.format('MMMM'), classes.month))
-        monthMap.push({ position: i * 40, time: current })
+        monthMap.push({ position: i * DAY_WIDTH, time: current })
       }
       if (current.day() === 6) {
-        weekends.push(<Box key={i} left={i * 40} className={classes.weekend} />)
+        weekends.push(<Box key={i} left={i * DAY_WIDTH} className={classes.weekend} />)
       }
     }
 
@@ -149,16 +157,23 @@ export const GanttTimeLine: FC<GanttTimeLineProps> = ({ items }) => {
   })
 
   const nowOffset = (dateData.now.diff(dateData.start, 's') / dateData.duration) * VIEW_WIDTH + STICKY_WIDTH
-  const scrollPos = scrollPosition.x + EDGE_PADDING
+  const viewHeight = Math.max(MIN_VIEW_HEIGHT, HEADER_HEIGHT + items.length * ROW_HEIGHT + BOTTOM_PADDING)
+
+  if (items.length === 0)
+    return (
+      <Center h={MIN_VIEW_HEIGHT}>
+        <Empty bordered iconSize={3} />
+      </Center>
+    )
 
   return (
-    <ScrollArea h={VIEW_HEIGHT} scrollbars="x" viewportRef={viewport} onScrollPositionChange={onScrollPositionChange}>
+    <ScrollArea h={viewHeight} scrollbars="x" viewportRef={viewport} onScrollPositionChange={onScrollPositionChange}>
       <Box
         className={classes.view}
         __vars={{
           '--sticky-width': `${STICKY_WIDTH}px`,
           '--view-width': `${VIEW_WIDTH}px`,
-          '--view-height': `${VIEW_HEIGHT}px`,
+          '--view-height': `${viewHeight}px`,
           '--now-offset': `${nowOffset}px`,
           '--edge-padding': `${EDGE_PADDING}px`,
         }}
@@ -184,8 +199,6 @@ export const GanttTimeLine: FC<GanttTimeLineProps> = ({ items }) => {
               ? VIEW_WIDTH
               : (item.end.diff(dateData.start, 's') / dateData.duration) * VIEW_WIDTH
 
-            const state = scrollPos < left ? 'b' : scrollPos > right ? 'a' : 'i'
-
             return (
               <Box
                 key={item.id}
@@ -193,15 +206,17 @@ export const GanttTimeLine: FC<GanttTimeLineProps> = ({ items }) => {
                 __vars={{
                   '--left': `${left + STICKY_WIDTH}px`,
                   '--right': `${right + STICKY_WIDTH}px`,
-                  '--width': `${right - left}px`,
+                  '--width': `${Math.max(MIN_BAR_WIDTH, right - left)}px`,
                   '--color': item.color,
                 }}
               >
                 <div className={cx(classes.dataItem, classes.dataRect)} data-rov={rightOverflow || undefined}>
-                  <Link className={classes.dataLink} to={`/games/${item.id}`} />
-                </div>
-                <div data-state={state} className={cx(classes.dataText, classes.dataRect)}>
-                  <Text>{item.textTitle}</Text>
+                  <Link
+                    className={classes.dataLink}
+                    to={`/games/${item.id}`}
+                    title={item.textTitle}
+                    aria-label={item.textTitle}
+                  />
                 </div>
               </Box>
             )
@@ -230,7 +245,7 @@ export const GanttTimeLine: FC<GanttTimeLineProps> = ({ items }) => {
           <div className={classes.titleBox}>
             <div className={classes.titleHeader}>
               <Stack justify="center" gap={4} align="center" h="100%">
-                <Title order={3} size="xl">
+                <Title order={3} size="xl" className={headlineClasses.gradientTitle}>
                   {t('common.content.home.recent_games')}
                 </Title>
                 <Text size="sm" fw={500}>

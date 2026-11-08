@@ -85,6 +85,7 @@ const CustomTheme: MantineThemeOverride = {
     ],
   },
   primaryColor: 'brand',
+  primaryShade: { light: 6, dark: 6 },
   defaultRadius: 'md',
   radius: {
     xs: '0.25rem',
@@ -152,6 +153,7 @@ const CustomTheme: MantineThemeOverride = {
     Badge: Badge.extend({
       defaultProps: {
         variant: 'outline',
+        autoContrast: true,
       },
     }),
     Tabs: Tabs.extend({

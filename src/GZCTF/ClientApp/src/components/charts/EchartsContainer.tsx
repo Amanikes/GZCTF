@@ -1,7 +1,8 @@
 import { useMantineColorScheme } from '@mantine/core'
 import type { EChartsOption } from 'echarts'
 import * as echarts from 'echarts'
-import { FC, useEffect, useRef } from 'react'
+import { FC, useEffect, useMemo, useRef } from 'react'
+import { ChartPalette } from '@Components/charts/chartTheme'
 
 export interface EchartsContainerProps extends React.ComponentPropsWithoutRef<'div'> {
   option: EChartsOption
@@ -16,10 +17,13 @@ export const EchartsContainer: FC<EchartsContainerProps> = (props) => {
 
   const { colorScheme } = useMantineColorScheme()
 
+  // callers can still override the palette by passing their own `color`
+  const themedOption = useMemo<EChartsOption>(() => ({ color: ChartPalette, ...option }), [option])
+
   useEffect(() => {
     if (chartRef.current && !chartInstance.current) {
       chartInstance.current = echarts.init(chartRef.current, colorScheme === 'dark' ? 'dark' : 'default', opts)
-      chartInstance.current.setOption(option)
+      chartInstance.current.setOption(themedOption)
     }
 
     return () => {
@@ -35,14 +39,14 @@ export const EchartsContainer: FC<EchartsContainerProps> = (props) => {
       chartInstance.current.dispose()
     }
     chartInstance.current = echarts.init(chartRef.current, colorScheme === 'dark' ? 'dark' : 'default', opts)
-    chartInstance.current.setOption(option)
+    chartInstance.current.setOption(themedOption)
   }, [colorScheme])
 
   useEffect(() => {
     if (chartInstance.current) {
-      chartInstance.current.setOption(option, true)
+      chartInstance.current.setOption(themedOption, true)
     }
-  }, [option])
+  }, [themedOption])
 
   useEffect(() => {
     const handleResize = () => {

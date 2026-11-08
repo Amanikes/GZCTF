@@ -1,13 +1,17 @@
-import { useMantineColorScheme, useMantineTheme } from '@mantine/core'
+import { Box, Center, useMantineColorScheme, useMantineTheme } from '@mantine/core'
 import dayjs from 'dayjs'
 import type { EChartsOption, SeriesOption } from 'echarts'
 import { FC, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useParams } from 'react-router'
+import { Empty } from '@Components/Empty'
 import { EchartsContainer } from '@Components/charts/EchartsContainer'
 import { normalizeLanguage, useLanguage } from '@Utils/I18n'
 import { getGameStatus, useGame, useGameScoreboard } from '@Hooks/useGame'
 import { TimeLine, TopTimeLine } from '@Api'
+
+const CHART_HEIGHT = 460
+const EMPTY_HEIGHT = 200
 
 interface TimeLineProps {
   divisionId: number | null
@@ -74,48 +78,46 @@ export const ScoreTimeLine: FC<TimeLineProps> = ({ divisionId }) => {
     const current = dayjs()
     const last = endTime.diff(current, 's') < 0 ? endTime : current
 
-    return [
-      {
-        type: 'line',
-        step: 'end',
-        data: [],
-        markLine:
-          dayjs(game.end).diff(dayjs(), 's') < 0
-            ? undefined
-            : {
-                symbol: 'none',
-                // https://echarts.apache.org/en/option.html#series-line.markLine.data
-                data: [
-                  {
-                    // xAxis?: string | number, but we need to use a Date object
-                    xAxis: last.toDate(),
-                    lineStyle: {
-                      color: colorScheme === 'dark' ? theme.colors.gray[3] : theme.colors.gray[6],
-                      wight: 2,
-                    },
-                    label: {
-                      textBorderWidth: 0,
-                      fontWeight: 500,
-                      formatter: (time: any) => dayjs(time.value).format('YYYY-MM-DD HH:mm'),
-                    },
-                  },
-                ],
+    const nowMarkLine =
+      dayjs(game.end).diff(dayjs(), 's') < 0
+        ? undefined
+        : {
+            symbol: 'none',
+            // https://echarts.apache.org/en/option.html#series-line.markLine.data
+            data: [
+              {
+                // xAxis?: string | number, but we need to use a Date object
+                xAxis: last.toDate() as unknown as number,
+                lineStyle: {
+                  color: colorScheme === 'dark' ? theme.colors.gray[3] : theme.colors.gray[6],
+                  width: 2,
+                },
+                label: {
+                  textBorderWidth: 0,
+                  fontWeight: 500,
+                  formatter: (time: any) => dayjs(time.value).format('YYYY-MM-DD HH:mm'),
+                },
               },
-      } as SeriesOption,
-      ...(timeLine?.map(
-        (team) =>
+            ],
+          }
+
+    return (
+      timeLine?.map(
+        (team, index) =>
           ({
             type: 'line',
             step: 'end',
             name: team.name,
+            // only the first series carries the marker, so the legend stays clean
+            markLine: index === 0 ? nowMarkLine : undefined,
             data: [
               [dayjs(game.start).toDate(), 0],
               ...(team.items?.map((timeline: TimeLine) => [timeline.time, timeline.score]) ?? []),
               [last.toDate(), (team.items && team.items[team.items.length - 1]?.score) ?? 0],
             ],
           }) satisfies SeriesOption
-      ) ?? []),
-    ]
+      ) ?? []
+    )
   }, [activeTeams, game, endTime, colorScheme, theme])
 
   const staticOption: EChartsOption = useMemo(() => {
@@ -155,7 +157,8 @@ export const ScoreTimeLine: FC<TimeLineProps> = ({ divisionId }) => {
           formatter: t('game.label.score_formatter'),
           color: labelColor,
         },
-        max: (value: any) => (Math.floor(value.max / 1000) + 1) * 1000,
+        // keep at least a 1 000 pt range so a single low score does not collapse the axis
+        max: (value: any) => Math.max(1000, (Math.floor((value.max ?? 0) / 1000) + 1) * 1000),
         splitLine: {
           show: true,
           lineStyle: {
@@ -175,7 +178,7 @@ export const ScoreTimeLine: FC<TimeLineProps> = ({ divisionId }) => {
       },
       legend: {
         orient: 'horizontal',
-        top: 420,
+        bottom: longGame ? 82 : 8,
         textStyle: {
           fontSize: 12,
           color: labelColor,
@@ -184,8 +187,9 @@ export const ScoreTimeLine: FC<TimeLineProps> = ({ divisionId }) => {
       grid: {
         top: 50,
         left: 70,
-        right: 40,
-        bottom: 110,
+        // the y-axis zoom slider used to sit in this margin and read as a stray scrollbar
+        right: 24,
+        bottom: longGame ? 124 : 60,
       },
       dataZoom: [
         {
@@ -195,15 +199,20 @@ export const ScoreTimeLine: FC<TimeLineProps> = ({ divisionId }) => {
           xAxisIndex: 0,
           filterMode: 'none',
         },
-        {
-          type: 'slider',
-          start: drawStart,
-          end: drawEnd,
-          xAxisIndex: 0,
-          showDetail: false,
-          bottom: 60,
-          height: 20,
-        },
+        // a slider is only useful for long games, otherwise it renders as dead chrome
+        ...(longGame
+          ? [
+              {
+                type: 'slider' as const,
+                start: drawStart,
+                end: drawEnd,
+                xAxisIndex: 0,
+                showDetail: false,
+                bottom: 46,
+                height: 18,
+              },
+            ]
+          : []),
         {
           type: 'inside',
           start: 0,
@@ -211,18 +220,18 @@ export const ScoreTimeLine: FC<TimeLineProps> = ({ divisionId }) => {
           yAxisIndex: 0,
           filterMode: 'none',
         },
-        {
-          type: 'slider',
-          start: 0,
-          end: 100,
-          yAxisIndex: 0,
-          showDetail: false,
-          right: 10,
-          width: 20,
-        },
       ],
     } satisfies EChartsOption
-  }, [t, game?.start, game?.end, colorScheme, theme, drawStart, drawEnd])
+  }, [t, game?.start, game?.end, colorScheme, theme, drawStart, drawEnd, longGame])
+
+  if (!chartData.length)
+    return (
+      <Box h={EMPTY_HEIGHT}>
+        <Center h="100%">
+          <Empty bordered iconSize={3} />
+        </Center>
+      </Box>
+    )
 
   return (
     <EchartsContainer
@@ -236,7 +245,7 @@ export const ScoreTimeLine: FC<TimeLineProps> = ({ divisionId }) => {
       }}
       style={{
         width: '100%',
-        height: '460px',
+        height: `${CHART_HEIGHT}px`,
         display: 'flex',
       }}
     />

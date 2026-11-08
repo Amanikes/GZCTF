@@ -5,7 +5,6 @@
   width: calc(var(--view-width) + var(--sticky-width));
   height: var(--view-height);
   background: var(--view-bg);
-  padding-bottom: 96px;
 
   --view-width: 1960px;
   --view-height: 300px;
@@ -56,11 +55,6 @@
   z-index: 85;
   margin-top: 1px;
   margin-bottom: 1px;
-
-  &::hover {
-    cursor: pointer;
-    background: var(--mantine-primary-color-7);
-  }
 }
 
 .dataItem {
@@ -81,67 +75,6 @@
     & > * {
       border-right: none;
       border-radius: 6px 0 0 6px;
-    }
-  }
-}
-
-.dataText {
-  --text-lh: 30px;
-  --text-fz: var(--mantine-font-size-sm);
-  --text-color: var(--mantine-color-default-color);
-
-  padding: 0 4px;
-  max-width: 300px;
-  pointer-events: none;
-  user-select: none;
-  overflow: hidden;
-
-  & > p {
-    z-index: 100;
-    font-weight: 500;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 200px;
-  }
-
-  &[data-state='b'] {
-    position: absolute;
-    left: var(--left);
-  }
-
-  &[data-state='i'] {
-    position: sticky;
-    left: calc(var(--sticky-width) + var(--edge-padding));
-  }
-
-  &[data-state='a'] {
-    position: absolute;
-    left: var(--right);
-  }
-}
-
-.dataLink {
-  display: flex;
-  color: inherit;
-  text-decoration: none;
-  user-select: none;
-  cursor: pointer;
-  width: 100%;
-  height: 100%;
-  border-radius: 6px;
-
-  transition: background 50ms ease-in;
-
-  @mixin hover {
-    @mixin light {
-      background: rgba(55, 53, 47, 0.065);
-      box-shadow: 0 0 2px var(--mantine-color-gray-2);
-    }
-
-    @mixin dark {
-      background: rgba(255, 255, 255, 0.075);
-      box-shadow: 0 0 2px var(--mantine-color-gray-7);
     }
   }
 }

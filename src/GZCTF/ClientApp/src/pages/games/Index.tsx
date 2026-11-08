@@ -1,14 +1,4 @@
-import {
-  Badge,
-  Group,
-  Pagination,
-  SimpleGrid,
-  Stack,
-  Text,
-  UnstyledButton,
-  useMantineColorScheme,
-  useMantineTheme,
-} from '@mantine/core'
+import { Badge, Group, Pagination, SimpleGrid, Stack, Text, UnstyledButton, useMantineTheme } from '@mantine/core'
 import { FC, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router'
@@ -38,13 +28,14 @@ const Games: FC = () => {
   usePageTitle(t('game.title.index'))
 
   const theme = useMantineTheme()
-  const { colorScheme } = useMantineColorScheme()
 
   const recents =
     recentGames?.map((game) => {
       const { startTime, endTime, status } = getGameStatus(game)
       const color = GameColorMap.get(status) ?? 'gray'
-      const colorHex = theme.colors[color][colorScheme === 'dark' ? 9 : 4]
+      // shade 6 keeps every status readable on both schemes; shade 9 was
+      // indistinguishable from the dark timeline background
+      const colorHex = theme.colors[color][6]
 
       return {
         id: game.id,
