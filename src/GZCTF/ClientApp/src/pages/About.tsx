@@ -106,12 +106,12 @@ const About: FC = () => {
                 <span className={classes.dot} data-c="y" />
                 <span className={classes.dot} data-c="g" />
                 <Text span size="xs" ff="monospace" c="dimmed" className={classes.termTitle}>
-                  gzctf@about:~
+                  axumsec@ctf:~
                 </Text>
               </Box>
               <Box className={classes.termBody}>
                 <div>
-                  <span className={classes.prompt}>$</span> gzctf --version
+                  <span className={classes.prompt}>$</span> axumsec --version
                 </div>
                 {valid ? (
                   <>
