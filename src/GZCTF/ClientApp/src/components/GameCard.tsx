@@ -1,9 +1,10 @@
 import {
-  BackgroundImage,
   Badge,
+  Box,
   Card,
   Center,
   Group,
+  Image,
   MantineColor,
   Stack,
   Title,
@@ -18,6 +19,7 @@ import { Link } from 'react-router'
 import { useLanguage } from '@Utils/I18n'
 import { getGameStatus, toLimitTag } from '@Hooks/useGame'
 import { BasicGameInfoModel } from '@Api'
+import classes from '@Styles/GameCard.module.css'
 import misc from '@Styles/Misc.module.css'
 
 export enum GameStatus {
@@ -51,49 +53,47 @@ export const GameCard: FC<GameCardProps> = ({ game, ...others }) => {
   return (
     <Card {...others} shadow="sm" component={Link} to={`/games/${game.id}`} classNames={{ root: misc.hoverCard }}>
       <Card.Section>
-        <BackgroundImage src={poster ?? ''} h="12rem" w="100%" pos="relative">
-          {!poster && (
-            <Center h="100%">
-              <Icon path={mdiFlagOutline} size={4} color={theme.colors.gray[5]} />
-            </Center>
+        <Box className={classes.media} data-poster={poster || undefined}>
+          {poster ? (
+            <Image src={poster} alt="" className={classes.poster} />
+          ) : (
+            <Icon path={mdiFlagOutline} size={3} color={theme.colors.gray[5]} className={classes.mark} />
           )}
           <Center pos="absolute" top={8} right={8}>
             <Badge color={color} size="sm" variant="filled">
               {status}
             </Badge>
           </Center>
-        </BackgroundImage>
+        </Box>
       </Card.Section>
-      <Stack gap="sm" pt="sm">
-        <Group gap={0} justify="space-between" align="flex-start">
-          <Stack gap={2} flex={1}>
-            <Group wrap="nowrap" gap="xs">
-              <Badge size="xs" color={color}>
-                {toLimitTag(t, limit)}
-              </Badge>
-              <Badge size="xs" color={color}>
-                {t('game.content.duration', {
-                  hours: duration,
-                })}
-              </Badge>
-            </Group>
-            <Title order={3} ta="left" lineClamp={2}>
-              {title}
-            </Title>
-            <Group mt={4} wrap="nowrap" gap={3}>
-              <Badge size="xs" color={color}>
-                {startTime.locale(locale).format('L LTS')}
-              </Badge>
-              <Icon path={mdiChevronTripleRight} size={1} />
-              <Badge size="xs" color={color}>
-                {endTime.locale(locale).format('L LTS')}
-              </Badge>
-            </Group>
-          </Stack>
+      <Stack gap="xs" pt="sm">
+        <Group wrap="nowrap" gap="xs">
+          <Badge size="xs" color={color}>
+            {toLimitTag(t, limit)}
+          </Badge>
+          <Badge size="xs" color={color}>
+            {t('game.content.duration', {
+              hours: duration,
+            })}
+          </Badge>
         </Group>
-        <Text fw={500} size="sm" lineClamp={3}>
-          {summary}
-        </Text>
+        <Title order={3} ta="left" lineClamp={2}>
+          {title}
+        </Title>
+        <Group wrap="nowrap" gap={3}>
+          <Badge size="xs" color={color}>
+            {startTime.locale(locale).format('L LTS')}
+          </Badge>
+          <Icon path={mdiChevronTripleRight} size={1} />
+          <Badge size="xs" color={color}>
+            {endTime.locale(locale).format('L LTS')}
+          </Badge>
+        </Group>
+        {summary ? (
+          <Text fw={500} size="sm" lineClamp={2} className={classes.summary}>
+            {summary}
+          </Text>
+        ) : null}
       </Stack>
     </Card>
   )

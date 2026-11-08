@@ -5,6 +5,8 @@ import { Link } from 'react-router'
 import { GameCard, GameColorMap } from '@Components/GameCard'
 import { WithNavBar } from '@Components/WithNavbar'
 import { GanttTimeLine } from '@Components/charts/GanttTimeline'
+import { RecentGameCarousel } from '@Components/mobile/RecentGameCarousel'
+import { useIsMobile } from '@Utils/ThemeOverride'
 import { getGameStatus, toLimitTag, useRecentGames } from '@Hooks/useGame'
 import { usePageTitle } from '@Hooks/usePageTitle'
 import api from '@Api'
@@ -28,6 +30,7 @@ const Games: FC = () => {
   usePageTitle(t('game.title.index'))
 
   const theme = useMantineTheme()
+  const isMobile = useIsMobile(900)
 
   const recents =
     recentGames?.map((game) => {
@@ -61,9 +64,14 @@ const Games: FC = () => {
   const pageCount = Math.ceil((games?.total ?? 0) / ITEM_PER_PAGE)
 
   return (
-    <WithNavBar withFooter withHeader stickyHeader>
-      <GanttTimeLine items={recents} />
-      <Stack pt="md" mih="calc(100vh - 78px)" justify="space-between">
+    <WithNavBar minWidth={0} withFooter withHeader stickyHeader>
+      {/* the 7-week timeline is unusable on a phone; reuse the home carousel there */}
+      {isMobile ? (
+        recentGames && recentGames.length > 0 && <RecentGameCarousel games={recentGames} />
+      ) : (
+        <GanttTimeLine items={recents} />
+      )}
+      <Stack pt={isMobile ? 0 : 'md'} mih="calc(100vh - 78px)" justify="space-between">
         <SimpleGrid cols={{ base: 1, sm: 1, md: 2, lg: 3, xl: 3, w18: 4, w24: 5 }} spacing="lg" verticalSpacing="lg">
           {games && games.data.map((g) => <GameCard key={g.id} game={g} />)}
         </SimpleGrid>
