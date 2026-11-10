@@ -1,4 +1,4 @@
-import { Box, Group, Text, Title } from '@mantine/core'
+import { Box, Group, Text } from '@mantine/core'
 import { FC } from 'react'
 import { LogoHeader } from '@Components/LogoHeader'
 import { useIsMobile } from '@Utils/ThemeOverride'
@@ -25,12 +25,12 @@ export const IconHeader: FC<StickyHeaderProps> = ({ sticky, px }) => {
       className={classes.group}
     >
       <LogoHeader />
-      <Title className={classes.subtitle} order={3}>
+      <Text className={classes.subtitle} fz="1.375rem" lh={1.4}>
         &gt;&nbsp;{config?.slogan ?? 'Hack for fun not for profit'}
         <Text span className={classes.blink}>
           _
         </Text>
-      </Title>
+      </Text>
     </Group>
   )
 }

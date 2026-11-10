@@ -26,6 +26,7 @@ import { useTranslation } from 'react-i18next'
 import { useParams } from 'react-router'
 import { ScoreboardItemModal } from '@Components/ScoreboardItemModal'
 import { ScrollingText } from '@Components/ScrollingText'
+import { TableEmptyRow } from '@Components/TableEmptyRow'
 import { useLanguage } from '@Utils/I18n'
 import {
   BloodBonus,
@@ -323,6 +324,7 @@ export const ScoreboardTable: FC<ScoreboardProps> = ({ divisionId, setDivisionId
 
   const bloodData = useBonusLabels(bloodBonus)
   const hasDivisionFilter = divisionOptions.length > 0
+  const columnCount = 5 + Object.keys(scoreboard?.challenges ?? {}).length
 
   return (
     <Paper shadow="md" p="md">
@@ -331,6 +333,7 @@ export const ScoreboardTable: FC<ScoreboardProps> = ({ divisionId, setDivisionId
           <Grid.Col span={3}>
             <Select
               defaultValue="all"
+              aria-label={t('game.content.join.division.label')}
               data={[{ value: 'all', label: t('game.label.score_table.all_teams') }, ...divisionOptions]}
               value={selectValue}
               readOnly={!hasDivisionFilter}
@@ -349,6 +352,7 @@ export const ScoreboardTable: FC<ScoreboardProps> = ({ divisionId, setDivisionId
           <Grid.Col span={6} />
           <Grid.Col span={3}>
             <TextInput
+              aria-label={t('game.placeholder.search_team')}
               placeholder={t('game.placeholder.search_team')}
               value={keyword}
               onChange={(e) => setKeyword(e.currentTarget.value)}
@@ -382,6 +386,12 @@ export const ScoreboardTable: FC<ScoreboardProps> = ({ divisionId, setDivisionId
                       divisionMap={divisionMap}
                     />
                   ))}
+                {scoreboard && currentItems?.length === 0 && (
+                  <TableEmptyRow
+                    colSpan={columnCount}
+                    description={debouncedKeyword ? t('common.content.no_data') : undefined}
+                  />
+                )}
               </Table.Tbody>
             </Table>
           </Table.ScrollContainer>

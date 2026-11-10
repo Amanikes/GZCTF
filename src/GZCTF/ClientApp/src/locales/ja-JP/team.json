@@ -54,6 +54,7 @@
     "members": "チームメンバー",
     "name": "チーム名",
     "role": "役割",
+    "token": "チームトークン",
     "transfer": "チーム譲渡"
   },
   "notification": {

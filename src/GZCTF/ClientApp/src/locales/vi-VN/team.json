@@ -54,6 +54,7 @@
     "members": "Các Thành viên",
     "name": "Tên Đội",
     "role": "Vai trò",
+    "token": "Mã đội",
     "transfer": "Chuyển quyền"
   },
   "notification": {

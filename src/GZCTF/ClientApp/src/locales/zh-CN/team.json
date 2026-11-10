@@ -54,6 +54,7 @@
     "members": "队伍成员",
     "name": "队伍名称",
     "role": "个人身份",
+    "token": "队伍令牌",
     "transfer": "转让队伍"
   },
   "notification": {

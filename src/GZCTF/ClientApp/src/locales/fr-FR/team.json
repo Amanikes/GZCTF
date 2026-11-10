@@ -54,6 +54,7 @@
     "members": "Membres",
     "name": "Nom de l'équipe",
     "role": "Rôle",
+    "token": "Jeton d'équipe",
     "transfer": "Transférer"
   },
   "notification": {

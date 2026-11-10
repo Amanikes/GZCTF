@@ -30,6 +30,7 @@ import { Icon } from '@mdi/react'
 import React, { FC, useEffect, useRef, useState } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 import { ActionIconWithConfirm } from '@Components/ActionIconWithConfirm'
+import { TableEmptyRow } from '@Components/TableEmptyRow'
 import { AdminPage } from '@Components/admin/AdminPage'
 import { UserEditModal, RoleColorMap } from '@Components/admin/UserEditModal'
 import { showErrorMsg } from '@Utils/Shared'
@@ -198,6 +199,7 @@ const Users: FC = () => {
           <TextInput
             w="36%"
             leftSection={<Icon path={mdiMagnify} size={1} />}
+            aria-label={t('admin.placeholder.users.search')}
             placeholder={t('admin.placeholder.users.search')}
             value={hint}
             onChange={setHint}
@@ -320,6 +322,7 @@ const Users: FC = () => {
                     </Table.Td>
                   </Table.Tr>
                 ))}
+              {users && users.length === 0 && <TableEmptyRow colSpan={7} />}
             </Table.Tbody>
           </Table>
         </ScrollArea>

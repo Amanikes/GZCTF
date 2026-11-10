@@ -54,6 +54,7 @@
     "members": "隊伍成員",
     "name": "隊伍名稱",
     "role": "個人身份",
+    "token": "隊伍權杖",
     "transfer": "轉讓隊伍"
   },
   "notification": {

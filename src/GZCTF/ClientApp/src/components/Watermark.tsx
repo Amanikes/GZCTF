@@ -175,6 +175,9 @@ export const Watermark: React.FC<React.PropsWithChildren<WatermarkProps>> = ({
       if (!watermark || !wrapper.contains(watermark)) {
         const div = document.createElement('div')
         div.setAttribute('style', watermarkCSS)
+        // purely decorative: keep it out of the accessibility tree and the tab order
+        div.setAttribute('aria-hidden', 'true')
+        div.setAttribute('role', 'presentation')
         watermarkRef.current = div
         wrapper.appendChild(watermarkBox(Math.ceil(Math.random() * 8), div))
       } else if (watermark.getAttribute('style') !== watermarkCSS) {

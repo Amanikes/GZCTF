@@ -30,6 +30,7 @@ import cx from 'clsx'
 import React, { FC, useEffect, useRef, useState } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 import { ActionIconWithConfirm } from '@Components/ActionIconWithConfirm'
+import { TableEmptyRow } from '@Components/TableEmptyRow'
 import { AdminPage } from '@Components/admin/AdminPage'
 import { TeamEditModal } from '@Components/admin/TeamEditModal'
 import { showErrorMsg } from '@Utils/Shared'
@@ -160,6 +161,7 @@ const Teams: FC = () => {
           <TextInput
             w="36%"
             leftSection={<Icon path={mdiMagnify} size={1} />}
+            aria-label={t('admin.placeholder.teams.search')}
             placeholder={t('admin.placeholder.teams.search')}
             value={hint}
             onChange={setHint}
@@ -221,6 +223,7 @@ const Teams: FC = () => {
                             </Avatar>
                             <Input
                               variant="unstyled"
+                              aria-label={t('common.label.team')}
                               value={team.name ?? 'team'}
                               readOnly
                               classNames={{
@@ -307,6 +310,7 @@ const Teams: FC = () => {
                     </Table.Tr>
                   )
                 })}
+              {teams && teams.length === 0 && <TableEmptyRow colSpan={4} />}
             </Table.Tbody>
           </Table>
         </ScrollArea>

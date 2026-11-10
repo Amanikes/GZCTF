@@ -1,4 +1,4 @@
-import { Stack } from '@mantine/core'
+import { Stack, VisuallyHidden } from '@mantine/core'
 import { FC, useState } from 'react'
 import { useParams } from 'react-router'
 import { ScoreboardTable } from '@Components/ScoreboardTable'
@@ -13,7 +13,7 @@ import { useGameTeamInfo } from '@Hooks/useGame'
 const Scoreboard: FC = () => {
   const { id } = useParams()
   const numId = parseInt(id ?? '-1')
-  const { teamInfo, error } = useGameTeamInfo(numId)
+  const { teamInfo, game, error } = useGameTeamInfo(numId)
 
   const [divisionId, setDivisionId] = useState<number | null>(null)
   const isMobile = useIsMobile(1080)
@@ -23,6 +23,11 @@ const Scoreboard: FC = () => {
     <WithNavBar width="90%" minWidth={0}>
       {isMobile ? (
         <Stack pt="md">
+          {game && (
+            <VisuallyHidden>
+              <h1>{game.title}</h1>
+            </VisuallyHidden>
+          )}
           {teamInfo && !error && <TeamRank />}
           {isVertical ? (
             <MobileScoreboardTable divisionId={divisionId} setDivisionId={setDivisionId} />

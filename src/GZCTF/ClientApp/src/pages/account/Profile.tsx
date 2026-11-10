@@ -152,7 +152,9 @@ const Profile: FC = () => {
 
   const context = (
     <>
-      <Title order={2}>{t('account.title.profile')}</Title>
+      <Title order={1} size="h2">
+        {t('account.title.profile')}
+      </Title>
       <Divider mt="xs" mb="md" />
       <Stack gap="md" m="auto">
         <Group wrap="nowrap">

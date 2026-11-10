@@ -28,6 +28,7 @@ import dayjs from 'dayjs'
 import { FC, useMemo, useState } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 import { ActionIconWithConfirm } from '@Components/ActionIconWithConfirm'
+import { TableEmptyRow } from '@Components/TableEmptyRow'
 import { AdminPage } from '@Components/admin/AdminPage'
 import { useLanguage } from '@Utils/I18n'
 import { showErrorMsg } from '@Utils/Shared'
@@ -156,6 +157,7 @@ const Instances: FC = () => {
               w="48%"
               searchable
               clearable
+              aria-label={t('admin.placeholder.instances.teams.select')}
               placeholder={t('admin.placeholder.instances.teams.select')}
               value={selectedTeamId}
               onChange={(id) => setSelectedTeamId(id)}
@@ -168,6 +170,7 @@ const Instances: FC = () => {
               w="48%"
               searchable
               clearable
+              aria-label={t('admin.placeholder.instances.challenges.select')}
               placeholder={t('admin.placeholder.instances.challenges.select')}
               onChange={(id) => setSelectedChallengeId(id)}
               leftSection={<Icon path={mdiPuzzleOutline} size={1} />}
@@ -306,6 +309,7 @@ const Instances: FC = () => {
                     </Table.Tr>
                   )
                 })}
+              {filteredInstances && filteredInstances.length === 0 && <TableEmptyRow colSpan={6} />}
             </Table.Tbody>
           </Table>
         </ScrollArea>

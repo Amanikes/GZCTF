@@ -54,6 +54,7 @@
     "members": "Miembros",
     "name": "Nombre del equipo",
     "role": "Rol",
+    "token": "Token del equipo",
     "transfer": "Transferir"
   },
   "notification": {

@@ -29,6 +29,7 @@ import { FC, useEffect, useState } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 import { Link, useNavigate } from 'react-router'
 import { GameColorMap } from '@Components/GameCard'
+import { TableEmptyRow } from '@Components/TableEmptyRow'
 import { AdminPage } from '@Components/admin/AdminPage'
 import { GameCreateModal } from '@Components/admin/GameCreateModal'
 import { showErrorMsg } from '@Utils/Shared'
@@ -261,6 +262,7 @@ const Games: FC = () => {
                     </Table.Tr>
                   )
                 })}
+              {games && games.length === 0 && <TableEmptyRow colSpan={5} />}
             </Table.Tbody>
           </Table>
         </ScrollArea>

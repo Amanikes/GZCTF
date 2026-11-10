@@ -99,6 +99,7 @@ export const TeamRank: FC<CardProps> = (props) => {
         {!isMobile && (
           <PasswordInput
             value={teamInfo?.teamToken}
+            aria-label={t('team.label.token')}
             readOnly
             leftSection={<Icon path={mdiKey} size={1} />}
             variant="unstyled"

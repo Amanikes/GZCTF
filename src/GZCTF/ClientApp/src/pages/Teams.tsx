@@ -10,6 +10,7 @@ import {
   TextInput,
   Title,
   useMantineTheme,
+  VisuallyHidden,
 } from '@mantine/core'
 import { showNotification } from '@mantine/notifications'
 import { mdiAccountMultiplePlus, mdiCheck, mdiClose, mdiHumanGreetingVariant } from '@mdi/js'
@@ -107,6 +108,9 @@ const Teams: FC = () => {
 
   return (
     <WithNavBar minWidth={0}>
+      <VisuallyHidden>
+        <h1>{t('team.title.index')}</h1>
+      </VisuallyHidden>
       <WithRole requiredRole={Role.User}>
         <Stack pt="md">
           <Group justify={isMobile ? 'center' : 'space-between'} grow={isMobile}>
@@ -135,7 +139,7 @@ const Teams: FC = () => {
               <Center w="100%" h="80vh">
                 <Stack align="center" gap="md" maw={isMobile ? '90%' : '100%'}>
                   <Icon path={mdiAccountMultiplePlus} size={4} color={theme.colors.gray[5]} />
-                  <Title order={2} ta="center" style={{ wordBreak: 'break-word', hyphens: 'auto' }}>
+                  <Title order={2} size="h2" ta="center" style={{ wordBreak: 'break-word', hyphens: 'auto' }}>
                     {t('team.content.no_team.title')}
                   </Title>
                   <Text size="sm" c="dimmed" ta="center" style={{ wordBreak: 'break-word', hyphens: 'auto' }}>

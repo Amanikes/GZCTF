@@ -1,4 +1,4 @@
-import { Button, Group, Pagination, Stack } from '@mantine/core'
+import { Button, Group, Pagination, Stack, VisuallyHidden } from '@mantine/core'
 import { mdiPlus } from '@mdi/js'
 import { Icon } from '@mdi/react'
 import { FC, useState } from 'react'
@@ -56,6 +56,9 @@ const Posts: FC = () => {
 
   return (
     <WithNavBar isLoading={!posts} minWidth={0} withHeader stickyHeader>
+      <VisuallyHidden>
+        <h1>{t('post.title.index')}</h1>
+      </VisuallyHidden>
       <Stack justify="space-between" mih="calc(100vh - 78px)">
         <Stack>
           {posts?.slice((activePage - 1) * ITEMS_PER_PAGE, activePage * ITEMS_PER_PAGE).map((post) => (

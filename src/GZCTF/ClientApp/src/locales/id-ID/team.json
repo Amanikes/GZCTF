@@ -54,6 +54,7 @@
     "members": "Anggota",
     "name": "Nama Tim",
     "role": "Role",
+    "token": "Token Tim",
     "transfer": "Transfer"
   },
   "notification": {

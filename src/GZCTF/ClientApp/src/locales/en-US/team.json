@@ -54,6 +54,7 @@
     "members": "Members",
     "name": "Team Name",
     "role": "Role",
+    "token": "Team Token",
     "transfer": "Transfer"
   },
   "notification": {

@@ -54,6 +54,7 @@
     "members": "팀원",
     "name": "팀 이름",
     "role": "역할",
+    "token": "팀 토큰",
     "transfer": "이전"
   },
   "notification": {

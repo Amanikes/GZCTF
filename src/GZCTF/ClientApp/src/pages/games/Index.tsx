@@ -1,4 +1,14 @@
-import { Badge, Group, Pagination, SimpleGrid, Stack, Text, UnstyledButton, useMantineTheme } from '@mantine/core'
+import {
+  Badge,
+  Group,
+  Pagination,
+  SimpleGrid,
+  Stack,
+  Text,
+  UnstyledButton,
+  useMantineTheme,
+  VisuallyHidden,
+} from '@mantine/core'
 import { FC, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router'
@@ -65,6 +75,9 @@ const Games: FC = () => {
 
   return (
     <WithNavBar minWidth={0} withFooter withHeader stickyHeader>
+      <VisuallyHidden>
+        <h1>{t('game.title.index')}</h1>
+      </VisuallyHidden>
       {/* the 7-week timeline is unusable on a phone; reuse the home carousel there */}
       {isMobile ? (
         recentGames && recentGames.length > 0 && <RecentGameCarousel games={recentGames} />

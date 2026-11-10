@@ -1,4 +1,4 @@
-import { Group, GroupProps, LoadingOverlay, Stack } from '@mantine/core'
+import { Group, GroupProps, LoadingOverlay, Stack, VisuallyHidden } from '@mantine/core'
 import {
   mdiAccountCogOutline,
   mdiAccountGroupOutline,
@@ -57,6 +57,9 @@ export const WithAdminTab: FC<AdminTabProps> = ({ head, headProps, isLoading, ch
 
   return (
     <Stack gap="xs" align="center" pt="md">
+      <VisuallyHidden>
+        <h1>{pages[activeTab].title}</h1>
+      </VisuallyHidden>
       <IconTabs
         withIcon
         active={activeTab}
