@@ -1,0 +1,7 @@
+# The image only needs the pre-published output and the Dockerfile itself.
+# Keeping the client sources and node_modules out of the context avoids
+# uploading gigabytes to the daemon on every build.
+*
+!Dockerfile
+!publish
+!publish/**

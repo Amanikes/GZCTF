@@ -1,0 +1,75 @@
+name: gzctf
+
+services:
+  gzctf:
+    image: ${GZCTF_IMAGE:-gzctf:axumsec}
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+      ASPNETCORE_URLS: http://+:8080
+      TZ: ${TZ:-UTC}
+      ConnectionStrings__Database: Host=postgres;Port=5432;Database=gzctf;Username=gzctf;Password=${POSTGRES_PASSWORD}
+      ConnectionStrings__RedisCache: redis:6379
+      XorKey: ${XOR_KEY}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD}
+      # Docker provider: per-team challenge containers are created through the socket below
+      ContainerProvider__Type: Docker
+      ContainerProvider__PortMappingType: Default
+      ContainerProvider__PublicEntry: ${PUBLIC_HOST}
+      DockerConfig__ChallengeNetwork: gzctf
+      # Caddy terminates TLS on the compose network, so trust its forwarded headers
+      ForwardedOptions__TrustedNetworks__0: 172.16.0.0/12
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./files:/app/files
+    group_add:
+      - ${DOCKER_GID}
+    expose:
+      - '8080'
+
+  postgres:
+    image: postgres:17-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: gzctf
+      POSTGRES_USER: gzctf
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U gzctf -d gzctf']
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    command: ['redis-server', '--save', '', '--appendonly', 'no']
+
+  caddy:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    depends_on:
+      - gzctf
+    ports:
+      - '80:80'
+      - '443:443'
+      - '443:443/udp'
+    environment:
+      DOMAIN: ${DOMAIN}
+      ACME_EMAIL: ${ACME_EMAIL}
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+
+volumes:
+  pgdata:
+  caddy_data:
+  caddy_config:
