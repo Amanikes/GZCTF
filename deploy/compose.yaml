@@ -26,7 +26,8 @@ services:
       ForwardedOptions__TrustedNetworks__0: 172.16.0.0/12
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - ./files:/app/files
+      # :Z relabels the data dir for SELinux hosts; ignored where SELinux is absent
+      - ./files:/app/files:Z
     group_add:
       - ${DOCKER_GID}
     expose:
@@ -65,7 +66,7 @@ services:
       DOMAIN: ${DOMAIN}
       ACME_EMAIL: ${ACME_EMAIL}
     volumes:
-      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro,Z
       - caddy_data:/data
       - caddy_config:/config
 
