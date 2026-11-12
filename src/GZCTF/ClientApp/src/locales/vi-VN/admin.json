@@ -323,7 +323,8 @@
           "no_division": "Không có bảng",
           "not_joined": "Chưa đăng ký.",
           "stats": "{{count}}/{{total}} đã tham gia.",
-          "update": "Đặt trạng thái của đội này thành: \"{{status}}\"?"
+          "update": "Đặt trạng thái của đội này thành: \"{{status}}\"?",
+          "status": "Trạng thái tham gia"
         }
       },
       "stats": "<1>{{current}}</1> trên <1>{{total}}</1> trò chơi được hiển thị.",

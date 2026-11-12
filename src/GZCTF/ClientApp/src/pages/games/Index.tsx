@@ -1,18 +1,10 @@
-import {
-  Badge,
-  Group,
-  Pagination,
-  SimpleGrid,
-  Stack,
-  Text,
-  UnstyledButton,
-  useMantineTheme,
-  VisuallyHidden,
-} from '@mantine/core'
+import { Badge, Group, Pagination, SimpleGrid, Stack, Text, UnstyledButton, useMantineTheme } from '@mantine/core'
 import { FC, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router'
+import { Empty } from '@Components/Empty'
 import { GameCard, GameColorMap } from '@Components/GameCard'
+import { PageHeader } from '@Components/PageHeader'
 import { WithNavBar } from '@Components/WithNavbar'
 import { GanttTimeLine } from '@Components/charts/GanttTimeline'
 import { RecentGameCarousel } from '@Components/mobile/RecentGameCarousel'
@@ -75,9 +67,7 @@ const Games: FC = () => {
 
   return (
     <WithNavBar minWidth={0} withFooter withHeader stickyHeader>
-      <VisuallyHidden>
-        <h1>{t('game.title.index')}</h1>
-      </VisuallyHidden>
+      <PageHeader title={t('game.title.index')} mb="sm" />
       {/* the 7-week timeline is unusable on a phone; reuse the home carousel there */}
       {isMobile ? (
         recentGames && recentGames.length > 0 && <RecentGameCarousel games={recentGames} />
@@ -85,9 +75,13 @@ const Games: FC = () => {
         <GanttTimeLine items={recents} />
       )}
       <Stack pt={isMobile ? 0 : 'md'} mih="calc(100vh - 78px)" justify="space-between">
-        <SimpleGrid cols={{ base: 1, sm: 1, md: 2, lg: 3, xl: 3, w18: 4, w24: 5 }} spacing="lg" verticalSpacing="lg">
-          {games && games.data.map((g) => <GameCard key={g.id} game={g} />)}
-        </SimpleGrid>
+        {games && games.data.length === 0 ? (
+          <Empty bordered iconSize={4} />
+        ) : (
+          <SimpleGrid cols={{ base: 1, sm: 1, md: 2, lg: 3, xl: 3, w18: 4, w24: 5 }} spacing="lg" verticalSpacing="lg">
+            {games && games.data.map((g) => <GameCard key={g.id} game={g} />)}
+          </SimpleGrid>
+        )}
         <Pagination.Root total={pageCount} siblings={3} value={activePage} onChange={setPage} mb="xl">
           <Group gap={5} justify="flex-end">
             <Pagination.First />

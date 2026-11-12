@@ -179,7 +179,7 @@ export const WithGameTab: FC<React.PropsWithChildren> = ({ children }) => {
         aside={
           game && (
             <>
-              <Title>{game?.title}</Title>
+              <Title order={1}>{game?.title}</Title>
               <GameCountdown game={game} />
             </>
           )

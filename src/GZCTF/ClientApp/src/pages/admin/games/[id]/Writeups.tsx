@@ -1,9 +1,10 @@
-import { Button, Center, Group, ScrollArea, Select, Stack, Text, Title } from '@mantine/core'
+import { Button, Center, Group, ScrollArea, Select, Stack } from '@mantine/core'
 import { mdiFolderDownloadOutline } from '@mdi/js'
 import { Icon } from '@mdi/react'
 import { FC, useState, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useParams } from 'react-router'
+import { Empty } from '@Components/Empty'
 import { PDFViewer } from '@Components/admin/PDFViewer'
 import { TeamWriteupCard } from '@Components/admin/TeamWriteupCard'
 import { WithGameEditTab } from '@Components/admin/WithGameEditTab'
@@ -58,10 +59,10 @@ const GameWriteups: FC = () => {
       <Group wrap="nowrap" align="flex-start" justify="space-between">
         {!filteredWriteups?.length || !selected ? (
           <Center w="100%" mih="calc(100vh - 180px)">
-            <Stack gap={0}>
-              <Title order={2}>{t('admin.content.games.writeups.empty.title')}</Title>
-              <Text>{t('admin.content.games.writeups.empty.description')}</Text>
-            </Stack>
+            <Empty
+              title={t('admin.content.games.writeups.empty.title')}
+              description={t('admin.content.games.writeups.empty.description')}
+            />
           </Center>
         ) : (
           <Stack pos="relative" mt="-3rem" w="calc(100% - 120px)">
@@ -70,6 +71,7 @@ const GameWriteups: FC = () => {
         )}
         <Stack gap="sm" miw="15rem" maw="15rem" h="calc(100vh - 110px - 3rem)">
           <Select
+            aria-label={t('game.content.join.division.label')}
             data={divisionOptions}
             value={selectedDivision}
             onChange={(value) => setSelectedDivision(value ?? '')}

@@ -243,7 +243,7 @@ export const GanttTimeLine: FC<GanttTimeLineProps> = ({ items }) => {
           <div className={classes.titleBox}>
             <div className={classes.titleHeader}>
               <Stack justify="center" gap={4} align="center" h="100%">
-                <Title order={3} size="xl" className={headlineClasses.gradientTitle}>
+                <Title order={2} size="xl" className={headlineClasses.gradientTitle}>
                   {t('common.content.home.recent_games')}
                 </Title>
                 <Text size="sm" fw={500}>

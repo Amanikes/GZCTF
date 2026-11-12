@@ -323,7 +323,8 @@
           "no_division": "디비전 없음",
           "not_joined": "가입되지 않음",
           "stats": "{{count}}/{{total}} 가입함",
-          "update": "팀의 상태를 \"{{status}}\"로 변경하시겠습니까?"
+          "update": "팀의 상태를 \"{{status}}\"로 변경하시겠습니까?",
+          "status": "참가 상태"
         }
       },
       "stats": "<1>{{total}}</1> 중 <1>{{current}}</1> 게임이 표시됩니다.",

@@ -7,7 +7,9 @@ import classes from '@Styles/Empty.module.css'
 
 interface EmptyProps {
   bordered?: boolean
+  title?: ReactNode
   description?: ReactNode
+  action?: ReactNode
   fontSize?: string | MantineSize | undefined
   mdiPath?: string
   iconSize?: number
@@ -19,9 +21,15 @@ export const Empty: FC<EmptyProps> = (props) => {
   return (
     <Stack align="center" data-border={props.bordered || undefined} className={classes.box}>
       <Icon path={props.mdiPath ?? mdiInbox} size={props.iconSize ?? 4} color="gray" />
-      <Text c="dimmed" size={props.fontSize}>
+      {props.title && (
+        <Text fw={600} size="lg" ta="center">
+          {props.title}
+        </Text>
+      )}
+      <Text c="dimmed" size={props.fontSize} ta="center">
         {props.description ?? t('common.content.no_data')}
       </Text>
+      {props.action}
     </Stack>
   )
 }

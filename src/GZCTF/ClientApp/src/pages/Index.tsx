@@ -1,4 +1,4 @@
-import { Group, Stack, Title, useMantineTheme } from '@mantine/core'
+import { Group, Stack, Title, useMantineTheme, VisuallyHidden } from '@mantine/core'
 import { useViewportSize } from '@mantine/hooks'
 import { mdiFlagCheckered } from '@mdi/js'
 import { Icon } from '@mdi/react'
@@ -63,6 +63,9 @@ const Home: FC = () => {
 
   return (
     <WithNavBar minWidth={0} withFooter withHeader stickyHeader>
+      <VisuallyHidden>
+        <h1>{t('common.tab.home')}</h1>
+      </VisuallyHidden>
       <Stack justify="flex-start">
         {isMobile && showGames && showGames.length > 0 && <RecentGameCarousel games={showGames} />}
         <Stack align="center">

@@ -323,7 +323,8 @@
           "no_division": "未分组",
           "not_joined": "未报名",
           "stats": "{{count}}/{{total}} 已报名",
-          "update": "确定要设为 \"{{status}}\" 吗？"
+          "update": "确定要设为 \"{{status}}\" 吗？",
+          "status": "参与状态"
         }
       },
       "stats": "已显示 <1>{{current}}</1>/<1>{{total}}</1> 比赛",

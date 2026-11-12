@@ -14,7 +14,6 @@ import {
   Stack,
   Text,
   TextInput,
-  Title,
   useMantineTheme,
 } from '@mantine/core'
 import { useInputState } from '@mantine/hooks'
@@ -36,6 +35,7 @@ import cx from 'clsx'
 import { FC, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate, useParams } from 'react-router'
+import { Empty } from '@Components/Empty'
 import { ParticipationDivisionEditModal } from '@Components/admin/ParticipationDivisionEditModal'
 import { ParticipationStatusControl } from '@Components/admin/ParticipationStatusControl'
 import { WithGameEditTab } from '@Components/admin/WithGameEditTab'
@@ -343,6 +343,7 @@ const GameTeamReview: FC = () => {
         <Group justify="space-between" wrap="nowrap" w="100%">
           <TextInput
             w="20rem"
+            aria-label={t('admin.placeholder.teams.search')}
             placeholder={t('admin.placeholder.teams.search')}
             value={search}
             onChange={(e) => {
@@ -355,6 +356,7 @@ const GameTeamReview: FC = () => {
           <Group justify="right" wrap="nowrap">
             {divisionSelectOptions.length > 0 && (
               <Select
+                aria-label={t('game.content.join.division.label')}
                 placeholder={t('admin.content.show_all')}
                 clearable
                 data={divisionSelectOptions}
@@ -366,6 +368,7 @@ const GameTeamReview: FC = () => {
               />
             )}
             <Select
+              aria-label={t('admin.content.games.review.participation.status')}
               placeholder={t('admin.content.show_all')}
               clearable
               data={Array.from(participationStatusMap, (v) => ({ value: v[0], label: v[1].title }))}
@@ -382,10 +385,10 @@ const GameTeamReview: FC = () => {
       <ScrollArea type="never" pos="relative" h="calc(100vh - 250px)">
         {participations && participations.length === 0 ? (
           <Center h="calc(100vh - 200px)">
-            <Stack gap={0}>
-              <Title order={2}>{t('admin.content.games.review.empty.title')}</Title>
-              <Text>{t('admin.content.games.review.empty.description')}</Text>
-            </Stack>
+            <Empty
+              title={t('admin.content.games.review.empty.title')}
+              description={t('admin.content.games.review.empty.description')}
+            />
           </Center>
         ) : (
           <Accordion variant="contained" chevronPosition="left" classNames={classes} className={classes.root}>

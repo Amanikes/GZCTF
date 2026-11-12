@@ -1,4 +1,4 @@
-import { Group, GroupProps, LoadingOverlay, Stack, VisuallyHidden } from '@mantine/core'
+import { Group, GroupProps, LoadingOverlay, Stack } from '@mantine/core'
 import {
   mdiAccountCogOutline,
   mdiAccountGroupOutline,
@@ -12,6 +12,7 @@ import React, { FC, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useLocation, useNavigate } from 'react-router'
 import { IconTabs } from '@Components/IconTabs'
+import { PageHeader } from '@Components/PageHeader'
 import { DEFAULT_LOADING_OVERLAY } from '@Utils/Shared'
 import { usePageTitle } from '@Hooks/usePageTitle'
 
@@ -57,9 +58,7 @@ export const WithAdminTab: FC<AdminTabProps> = ({ head, headProps, isLoading, ch
 
   return (
     <Stack gap="xs" align="center" pt="md">
-      <VisuallyHidden>
-        <h1>{pages[activeTab].title}</h1>
-      </VisuallyHidden>
+      <PageHeader eyebrow={t('common.tab.admin')} title={pages[activeTab].title} />
       <IconTabs
         withIcon
         active={activeTab}

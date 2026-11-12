@@ -242,7 +242,9 @@ const GameDetail: FC = () => {
               {game?.hidden && <Badge variant="outline">{t('game.tag.hidden')}</Badge>}
             </Group>
             <Stack gap={2}>
-              <Title className={classes.title}>{game?.title}</Title>
+              <Title order={1} className={classes.title}>
+                {game?.title}
+              </Title>
               <Text size="sm" c="dimmed">
                 <Trans i18nKey="game.content.joined_status" values={{ count: game?.teamCount ?? 0 }} />
               </Text>

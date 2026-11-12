@@ -323,7 +323,8 @@
           "no_division": "Aucune division",
           "not_joined": "Non Inscrit",
           "stats": "{{count}}/{{total}} rejoint",
-          "update": "Définir le statut de cette équipe sur : \"{{status}}\" ?"
+          "update": "Définir le statut de cette équipe sur : \"{{status}}\" ?",
+          "status": "Statut de participation"
         }
       },
       "stats": "<1>{{current}}</1> sur <1>{{total}}</1> jeux affichés",

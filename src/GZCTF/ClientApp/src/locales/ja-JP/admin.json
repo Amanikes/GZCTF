@@ -323,7 +323,8 @@
           "no_division": "ディビジョンなし",
           "not_joined": "参加未申請",
           "stats": "{{count}}/{{total}} 参加申請済み",
-          "update": "{{status}}に設定してもよろしいですか?"
+          "update": "{{status}}に設定してもよろしいですか?",
+          "status": "参加ステータス"
         }
       },
       "stats": "<1>{{current}}</1>/<1>{{total}}</1> ゲーム表示済み",

@@ -323,7 +323,8 @@
           "no_division": "Sin división",
           "not_joined": "No registrado",
           "stats": "{{count}}/{{total}} unido",
-          "update": "¿Establecer el estado de este equipo a: \"{{status}}\"?"
+          "update": "¿Establecer el estado de este equipo a: \"{{status}}\"?",
+          "status": "Estado de participación"
         }
       },
       "stats": "<1>{{current}}</1> de <1>{{total}}</1> juegos mostrados",

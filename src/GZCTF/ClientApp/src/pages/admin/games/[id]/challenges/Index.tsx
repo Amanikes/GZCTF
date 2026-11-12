@@ -96,6 +96,7 @@ const GameChallengeEdit: FC = () => {
       head={
         <>
           <Select
+            aria-label={t('admin.content.games.challenges.category')}
             placeholder={t('admin.content.show_all')}
             clearable
             searchable

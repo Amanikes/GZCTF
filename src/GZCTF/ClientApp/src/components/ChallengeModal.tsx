@@ -296,6 +296,7 @@ export const ChallengeModal: FC<ChallengeModalProps> = (props) => {
       >
         <Group justify="space-between" gap="sm" align="flex-end">
           <TextInput
+            aria-label={t('common.label.flag')}
             placeholder={placeholder}
             value={inputValue}
             disabled={inputDisabled}

@@ -1,6 +1,7 @@
-import { Stack, VisuallyHidden } from '@mantine/core'
+import { Stack } from '@mantine/core'
 import { FC, useState } from 'react'
 import { useParams } from 'react-router'
+import { PageHeader } from '@Components/PageHeader'
 import { ScoreboardTable } from '@Components/ScoreboardTable'
 import { TeamRank } from '@Components/TeamRank'
 import { WithGameTab } from '@Components/WithGameTab'
@@ -23,11 +24,7 @@ const Scoreboard: FC = () => {
     <WithNavBar width="90%" minWidth={0}>
       {isMobile ? (
         <Stack pt="md">
-          {game && (
-            <VisuallyHidden>
-              <h1>{game.title}</h1>
-            </VisuallyHidden>
-          )}
+          {game && <PageHeader title={game.title} />}
           {teamInfo && !error && <TeamRank />}
           {isVertical ? (
             <MobileScoreboardTable divisionId={divisionId} setDivisionId={setDivisionId} />

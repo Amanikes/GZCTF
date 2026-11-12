@@ -20,7 +20,7 @@ const EmailConfirmationPending: FC = () => {
       <Stack align="center" justify="center" maw={400} px="md">
         <LogoHeader onClick={() => navigate('/')} />
         <Stack gap="xs" align="center" justify="center">
-          <Title order={3} ta="center">
+          <Title order={1} size="h3" ta="center">
             {t('account.content.verify_email.title')}
           </Title>
           <Text size="md" fw="bold" ta="center">

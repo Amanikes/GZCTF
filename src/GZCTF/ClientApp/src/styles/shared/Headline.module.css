@@ -1,3 +1,10 @@
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.35px;
+  font-weight: 600;
+  color: light-dark(var(--mantine-color-gray-6), var(--mantine-color-gray-4));
+}
+
 .gradientTitle {
   background-image: linear-gradient(
     to right,

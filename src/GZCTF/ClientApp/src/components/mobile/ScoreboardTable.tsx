@@ -117,6 +117,7 @@ export const MobileScoreboardTable: FC<ScoreboardProps> = ({ divisionId, setDivi
         {divisionOptions.length > 0 && (
           <Select
             defaultValue="all"
+            aria-label={t('game.content.join.division.label')}
             data={[{ value: 'all', label: t('game.label.score_table.all_teams') }, ...divisionOptions]}
             value={selectValue}
             onChange={(div) => {

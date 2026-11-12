@@ -211,35 +211,35 @@ Frontend has no test runner, so validation is:
 ## 8. Execution Checklist
 
 **Phase 0**
-- [ ] Add `primaryShade: { light: 6, dark: 6 }`
-- [ ] Button radius/weight overrides
-- [ ] `components/charts/chartTheme.ts` + `EchartsContainer` default `color`
-- [ ] `Typography.module.css` with `.eyebrow` / `.gradientTitle`
+- [x] Add `primaryShade: { light: 6, dark: 6 }`
+- [ ] Button radius/weight overrides (deferred — open question 2)
+- [x] `components/charts/chartTheme.ts` + `EchartsContainer` default `color`
+- [x] Shared typography utilities (`.eyebrow` / `.gradientTitle` in `Headline.module.css`)
 
 **Phase 1 — Gantt**
-- [ ] Unify label state coordinate space
-- [ ] Pin/hide labels under the sticky column
-- [ ] Dynamic height; remove `padding-bottom: 96px`
-- [ ] Fix or delete `&::hover`
-- [ ] Empty state
+- [x] Unify label state coordinate space
+- [x] Pin/hide labels under the sticky column
+- [x] Dynamic height; remove `padding-bottom: 96px`
+- [x] Fix or delete `&::hover`
+- [x] Empty state
 
 **Phase 2 — Scoreboard chart**
-- [ ] Move vertical `dataZoom` out of the grid
-- [ ] Non-zero `yAxis` floor
-- [ ] Remove placeholder series; relocate “now” marker
-- [ ] Space `toolbox`/`legend`
-- [ ] Empty state
+- [x] Move vertical `dataZoom` out of the grid
+- [x] Non-zero `yAxis` floor
+- [x] Remove placeholder series; relocate “now” marker
+- [x] Space `toolbox`/`legend`
+- [x] Empty state
 
 **Phase 3 — Cards**
-- [ ] Responsive media band with poster fallback
-- [ ] Content-driven height; collapse empty summary
-- [ ] Status badge triad
+- [x] Responsive media band with poster fallback
+- [x] Content-driven height; collapse empty summary
+- [x] Status badge triad
 
 **Phase 4 — Primitives & a11y**
-- [ ] `EmptyState` / `PageHeader` adopted
-- [ ] Labels on filter inputs
-- [ ] One `h1` per page; slogan demoted
-- [ ] `aria-hidden` watermark
+- [x] `EmptyState` / `PageHeader` adopted (`Empty` extended with `title`/`action`; `PageHeader` added)
+- [x] Labels on filter inputs
+- [x] One `h1` per page; slogan demoted
+- [x] `aria-hidden` watermark
 
 **Phase 5 — Polish**
 - [ ] `WithWiderScreen` actionable fallback
