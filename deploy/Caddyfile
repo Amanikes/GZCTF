@@ -6,3 +6,4 @@
 	encode zstd gzip
 	reverse_proxy gzctf:8080
 }
+	
