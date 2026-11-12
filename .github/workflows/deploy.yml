@@ -1,0 +1,118 @@
+name: build-deploy
+
+on:
+  push:
+    branches: [develop, main]
+    paths-ignore:
+      - '**/*.md'
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    outputs:
+      image: ${{ steps.image.outputs.image }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Resolve image name
+        id: image
+        run: echo "image=ghcr.io/${GITHUB_REPOSITORY,,}/gzctf" >> "$GITHUB_OUTPUT"
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Install pnpm
+        run: npm install --global pnpm@latest
+
+      - name: Install frontend dependencies
+        working-directory: src/GZCTF/ClientApp
+        run: pnpm install --frozen-lockfile
+
+      # SixLabors.ImageSharp is pinned to 3.1.x in Directory.Packages.props so
+      # the publish step does not require a commercial license key.
+      - name: Publish application
+        working-directory: src/GZCTF
+        run: |
+          dotnet publish GZCTF.csproj -c Release \
+            -o publish/linux/amd64 -r linux-x64 --no-self-contained \
+            /p:PublishReadyToRun=true
+
+      - uses: docker/setup-buildx-action@v3
+
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: docker/build-push-action@v6
+        with:
+          context: src/GZCTF
+          platforms: linux/amd64
+          push: true
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          tags: |
+            ${{ steps.image.outputs.image }}:${{ github.sha }}
+            ${{ steps.image.outputs.image }}:latest
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      # Requires repository secrets:
+      #   DEPLOY_HOST     elastic IP or DNS name
+      #   DEPLOY_USER     ubuntu
+      #   DEPLOY_SSH_KEY  private key with passwordless sudo
+      #   DEPLOY_URL      https://ctf.example.com
+      # The GHCR package must be public, or the host must already be logged in:
+      #   echo <token> | docker login ghcr.io -u <user> --password-stdin
+      - name: Deploy over SSH
+        env:
+          SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
+          SSH_HOST: ${{ secrets.DEPLOY_HOST }}
+          SSH_USER: ${{ secrets.DEPLOY_USER }}
+          IMAGE: ${{ needs.build.outputs.image }}:${{ github.sha }}
+        run: |
+          set -euo pipefail
+          install -m 700 -d "$HOME/.ssh"
+          printf '%s\n' "$SSH_KEY" > "$HOME/.ssh/deploy_key"
+          chmod 600 "$HOME/.ssh/deploy_key"
+          ssh-keyscan -H "$SSH_HOST" >> "$HOME/.ssh/known_hosts" 2>/dev/null
+
+          ssh -i "$HOME/.ssh/deploy_key" "$SSH_USER@$SSH_HOST" "set -e
+            sudo sed -i 's|^GZCTF_IMAGE=.*|GZCTF_IMAGE=$IMAGE|' /opt/gzctf/.env
+            sudo docker compose -f /opt/gzctf/compose.yaml pull gzctf
+            sudo docker compose -f /opt/gzctf/compose.yaml up -d
+            sudo docker compose -f /opt/gzctf/compose.yaml ps
+          "
+
+      - name: Smoke test
+        env:
+          URL: ${{ secrets.DEPLOY_URL }}
+        run: |
+          for attempt in $(seq 1 24); do
+            code=$(curl -s -o /dev/null -w '%{http_code}' "$URL/api/info" || true)
+            if [ "$code" = "200" ]; then
+              echo "healthy after $attempt attempt(s)"
+              exit 0
+            fi
+            sleep 5
+          done
+          echo "health check failed" >&2
+          exit 1

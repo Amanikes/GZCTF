@@ -1,0 +1,10 @@
+aws_region       = "us-east-1"
+project          = "gzctf"
+instance_type    = "t3.large"
+key_name         = "AXCTF-PAIR"
+allowed_ssh_cidr = "203.0.113.10/32"
+root_volume_gb   = 48
+
+# Optional: let Terraform create the DNS record
+# domain          = "ctf.example.com"
+# route53_zone_id = "Z0123456789ABCDEFGHIJ"

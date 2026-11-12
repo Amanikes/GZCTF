@@ -1,2 +1,13 @@
 .env
 files/
+
+# Terraform
+terraform/.terraform/
+terraform/*.tfstate
+terraform/*.tfstate.*
+terraform/terraform.tfvars
+
+# Ansible
+ansible/inventory.ini
+ansible/credentials/
+ansible/*.retry

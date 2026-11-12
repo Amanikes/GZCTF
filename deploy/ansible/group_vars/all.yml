@@ -1,0 +1,25 @@
+---
+# Public hostname served by Caddy. Without DNS, use <elastic-ip>.sslip.io
+gzctf_domain: ctf.example.com
+
+# Contact address used for ACME account registration
+gzctf_acme_email: admin@example.com
+
+# Hostname handed to players in challenge instance entries.
+# Defaults to gzctf_domain when omitted.
+# gzctf_public_host: ctf.example.com
+
+# Image to run. CI publishes to GHCR; use a locally built tag like gzctf:axumsec
+# when building on the host instead.
+gzctf_image: ghcr.io/amanikes/gzctf/gzctf:latest
+
+gzctf_tz: UTC
+
+# Secrets. The password lookups create the files on first run and reuse them
+# afterwards, so re-running the playbook keeps credentials stable.
+gzctf_postgres_password: "{{ lookup('password', 'credentials/postgres length=24 chars=hexdigits') }}"
+gzctf_xor_key: "{{ lookup('password', 'credentials/xor length=16 chars=hexdigits') }}"
+
+# Set this in an encrypted vault file instead of plaintext, e.g.
+#   ansible-vault encrypt_string 'Strong-Passw0rd' --name 'gzctf_admin_password'
+gzctf_admin_password: "ChangeMe-12345"
