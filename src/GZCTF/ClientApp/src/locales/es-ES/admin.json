@@ -414,7 +414,7 @@
           "label": "Logo de la Plataforma"
         },
         "name": {
-          "description": "El nombre de la plataforma se mostrará con ::CTF",
+          "description": "El nombre de la plataforma se muestra en el encabezado y en el título de la pestaña, seguido de \"CTF\"",
           "label": "Nombre de la Plataforma"
         },
         "slogan": {
@@ -582,7 +582,7 @@
       "footer": "`Test` <mbr/> Algo...",
       "logo": {
         "custom": "Logo personalizado",
-        "default": "Usar icono GZCTF"
+        "default": "Usar el icono predeterminado"
       }
     },
     "teams": {

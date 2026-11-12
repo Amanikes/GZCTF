@@ -414,7 +414,7 @@
           "label": "Logo platform"
         },
         "name": {
-          "description": "Nama platform akan ditampilkan dengan ::CTF",
+          "description": "Nama platform ditampilkan di header dan judul tab browser, diikuti \"CTF\"",
           "label": "Nama platform"
         },
         "slogan": {
@@ -582,7 +582,7 @@
       "footer": "`Test` <mbr/> Sesuatu...",
       "logo": {
         "custom": "Kustom logo",
-        "default": "Gunakan GZCTF icon"
+        "default": "Gunakan ikon bawaan"
       }
     },
     "teams": {

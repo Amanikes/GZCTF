@@ -414,7 +414,7 @@
           "label": "Plattform-Logo"
         },
         "name": {
-          "description": "Der Plattformname wird mit ::CTF angezeigt",
+          "description": "Der Plattformname wird in der Kopfzeile und im Browser-Tab-Titel angezeigt, gefolgt von \"CTF\"",
           "label": "Plattformname"
         },
         "slogan": {
@@ -582,7 +582,7 @@
       "footer": "`Test` <mbr/> Etwas...",
       "logo": {
         "custom": "Benutzerdefiniertes Logo",
-        "default": "GZCTF-Icon verwenden"
+        "default": "Standard-Symbol verwenden"
       }
     },
     "teams": {

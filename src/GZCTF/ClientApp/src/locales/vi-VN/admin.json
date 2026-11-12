@@ -414,7 +414,7 @@
           "label": "Logo nền tảng."
         },
         "name": {
-          "description": "Tên nền tảng sẽ được hiển thị với ::CTF.",
+          "description": "Tên nền tảng được hiển thị ở phần đầu trang và tiêu đề tab trình duyệt, kèm hậu tố \"CTF\"",
           "label": "Tên nền tảng."
         },
         "slogan": {
@@ -582,7 +582,7 @@
       "footer": "`Kiểm tra` <mbr/> Một cái gì đó...",
       "logo": {
         "custom": "Logo tùy chỉnh",
-        "default": "Sử dụng biểu tượng GZCTF"
+        "default": "Dùng biểu tượng mặc định"
       }
     },
     "teams": {

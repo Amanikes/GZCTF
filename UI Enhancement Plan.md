@@ -242,10 +242,10 @@ Frontend has no test runner, so validation is:
 - [x] `aria-hidden` watermark
 
 **Phase 5 — Polish**
-- [ ] `WithWiderScreen` actionable fallback
-- [ ] Settings copy in 11 locales
-- [ ] Optional webfont trim
-- [ ] Optional desktop header
+- [x] `WithWiderScreen` actionable fallback (minimum width hint + home link)
+- [x] Settings copy in 11 locales
+- [x] Webfont trim (Geist + Geist Mono only)
+- [ ] Optional desktop header (deferred — not part of this pass)
 
 ---
 
@@ -264,9 +264,9 @@ Frontend has no test runner, so validation is:
 
 ## 10. Open Questions
 
-1. **Status colours** — approve moving “ongoing/ended/coming” off red/green/blue onto a teal/amber/slate triad? This is the one change that alters meaning-laden colour, so I'd rather not decide unilaterally.
-2. **Button geometry** — strict axumsec fidelity (8px radius, 500 weight) or keep Mantine's 10px/600 for consistency with inputs and tabs?
-3. **Desktop header** — add the translucent blurred header (matching axumsec) to desktop content pages, or preserve the current icon-rail-only layout?
-4. **Gantt investment** — fix in place (plan assumes this), or replace with an ECharts timeline later?
-5. **Fonts** — is Lexend still wanted anywhere, or is Geist-only acceptable?
-6. **Batching** — ship Phases 0–2 as one change set (highest impact, moderate review surface), then 3–5 separately?
+1. **Status colours** — resolved: ongoing = teal, coming = amber, ended = slate (`GameColorMap`).
+2. **Button geometry** — open: still Mantine's `md` radius. Deferred so input/tab geometry stays consistent.
+3. **Desktop header** — deferred: the icon-rail-only layout is preserved for now.
+4. **Gantt investment** — resolved: fixed in place, no chart replacement.
+5. **Fonts** — resolved: Geist + Geist Mono only; Lexend/JetBrains Mono remain as fallback names but are no longer downloaded.
+6. **Batching** — resolved: shipped as Phases 0–2, 3, 4, and 5 in separate commits.

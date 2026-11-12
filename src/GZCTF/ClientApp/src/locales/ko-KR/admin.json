@@ -414,7 +414,7 @@
           "label": "플랫폼 로고"
         },
         "name": {
-          "description": "플랫폼 이름에 ::CTF 가 함께 표시될 것입니다.",
+          "description": "플랫폼 이름은 헤더와 브라우저 탭 제목에 표시되며 \"CTF\"가 뒤에 붙습니다",
           "label": "플랫폼 이름"
         },
         "slogan": {
@@ -582,7 +582,7 @@
       "footer": "`Test` <mbr/> 중...",
       "logo": {
         "custom": "커스텀 로고",
-        "default": "GZCTF 아이콘 사용하기"
+        "default": "기본 아이콘 사용"
       }
     },
     "teams": {
